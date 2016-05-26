@@ -1,5 +1,24 @@
 # Ember Paper Changelog
 
+### Unreleased
+
+### 0.2.14
+
+- Updated the dependency on Hammer.js from `hammerjs` to `hammer.js`.
+  - Update your project's `bower.json` to require `"hammer.js": "^2.0.8"`.
+
+### 0.2.13
+
+- [#322](https://github.com/miguelcobain/ember-paper/pull/322) Remove documentation for searchTest in inverse block for `{{paper-autocomplete}}`.
+- [#323](https://github.com/miguelcobain/ember-paper/pull/323) Pass item through as expected rather than label to itemComponent for `{{paper-autocomplete}}`.
+- [#347](https://github.com/miguelcobain/ember-paper/pull/347) Don't import Hammer or matchMedia when building in node (FastBoot support)
+
+### 0.2.12
+
+- [#307](https://github.com/miguelcobain/ember-paper/pull/307) Add paper-card title components
+- [#283](https://github.com/miguelcobain/ember-paper/pull/283) Adds support for `fullTextSearch` attribute on `{{paper-autocomplete}}`. Enables passing Promises to the `model` attribute on `{{paper-autocomplete}}`. Docs updated.
+- [#311](https://github.com/miguelcobain/ember-paper/pull/311) Fixed issue with `paper-wormhole` div in `<head>` tag.
+
 ### 0.2.11
 
 - [#253](https://github.com/miguelcobain/ember-paper/pull/253) Add `closeOnClick` to paper-sidenav
