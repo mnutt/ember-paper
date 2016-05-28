@@ -55,34 +55,112 @@ $font_root_url: 'https://fonts.gstatic.com/s' !default;
   padding-right: 5px;
 }
 
+// Icon spinners (not part of angular-material)
+.md-spin {
+   animation: md-spin 1.5s infinite linear;
+}
+
+.md-spin-reverse {
+  animation: md-spin-reverse 1.5s infinite linear;
+}
+
+// Spin
+@keyframes md-spin {
+  0% {
+    transform: rotate(0deg);
+   }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+// Spin Reverse
+@keyframes md-spin-reverse {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-359deg);
+  }
+}
+
+// Core styles
 @import 'color-palette';
 @import 'default-theme';
-@import 'mixins';
-@import 'variables';
-@import 'structure';
-@import 'typography';
-@import 'layout';
+@import './angular-material/core/style/mixins';
+@import './angular-material/core/style/variables';
+@import './angular-material/core/style/structure';
+@import './angular-material/core/style/typography';
+@import './angular-material/core/services/layout/layout.attributes';
+@import './angular-material/core/services/layout/layout.scss';
 
-@import 'paper-content';
-@import 'paper-card';
-@import 'paper-button';
-@import 'paper-checkbox';
-@import 'paper-radio';
-@import 'paper-switch';
-@import 'paper-input';
-@import 'paper-list';
-@import 'paper-divider';
-@import 'paper-whiteframe';
-@import 'paper-toolbar';
-@import 'paper-icon';
-@import 'paper-slider';
-@import 'paper-subheader';
-@import 'paper-autocomplete';
-@import 'paper-progress-linear';
-@import 'paper-progress-circular';
-@import 'paper-menu';
-@import 'paper-select';
-@import 'paper-grid-list';
+// Component styles
+@import './angular-material/components/content/content';
+@import './angular-material/components/content/content-theme';
 
-@import 'paper-sidenav';
-@import 'paper-backdrop';
+@import './angular-material/components/card/card';
+@import './angular-material/components/card/card-theme';
+
+@import './angular-material/components/button/button';
+@import './angular-material/components/button/button-theme';
+
+@import './angular-material/components/checkbox/checkbox';
+@import './angular-material/components/checkbox/checkbox-theme';
+
+@import './angular-material/components/radioButton/radio-button';
+@import './angular-material/components/radioButton/radio-button-theme';
+
+@import './angular-material/components/switch/switch';
+@import './angular-material/components/switch/switch-theme';
+
+@import './angular-material/components/input/input';
+@import './angular-material/components/input/input-theme';
+
+@import './angular-material/components/list/list';
+@import './angular-material/components/list/list-theme';
+
+@import './angular-material/components/divider/divider';
+@import './angular-material/components/divider/divider-theme';
+
+@import './angular-material/components/whiteframe/whiteframe';
+
+@import './angular-material/components/toolbar/toolbar';
+@import './angular-material/components/toolbar/toolbar-theme';
+
+@import './angular-material/components/icon/icon';
+@import './angular-material/components/icon/icon-theme';
+
+@import './angular-material/components/slider/slider';
+@import './angular-material/components/slider/slider-theme';
+
+@import './angular-material/components/subheader/subheader';
+@import './angular-material/components/subheader/subheader-theme';
+
+@import './angular-material/components/autocomplete/autocomplete';
+@import './angular-material/components/autocomplete/autocomplete-theme';
+
+@import './angular-material/components/progressLinear/progress-linear';
+@import './angular-material/components/progressLinear/progress-linear-theme';
+
+@import './angular-material/components/progressCircular/progress-circular';
+@import './angular-material/components/progressCircular/progress-circular-theme';
+
+@import './angular-material/components/menu/menu';
+@import './angular-material/components/menu/menu-theme';
+
+@import './angular-material/components/select/select';
+@import './angular-material/components/select/select-theme';
+
+@import './angular-material/components/gridList/grid-list';
+
+@import './angular-material/components/sidenav/sidenav';
+@import './angular-material/components/sidenav/sidenav';
+
+@import './angular-material/components/backdrop/backdrop';
+@import './angular-material/components/backdrop/backdrop-theme';
+
+@import './angular-material/components/dialog/dialog';
+@import './angular-material/components/dialog/dialog-theme';
+
+// Backports of features from future versions of angular-material-source to this version
+@import './backports/paper-input';

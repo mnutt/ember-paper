@@ -1,6 +1,4 @@
-# Ember Paper [![Build Status](https://travis-ci.org/miguelcobain/ember-paper.svg)](https://travis-ci.org/miguelcobain/ember-paper) [![Ember Observer Score](http://emberobserver.com/badges/ember-paper.svg)](http://emberobserver.com/addons/ember-paper)
-
-[![Join the chat at https://gitter.im/miguelcobain/ember-paper](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/miguelcobain/ember-paper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Ember Paper [![Build Status](https://travis-ci.org/miguelcobain/ember-paper.svg)](https://travis-ci.org/miguelcobain/ember-paper) [![Ember Observer Score](http://emberobserver.com/badges/ember-paper.svg)](http://emberobserver.com/addons/ember-paper) [![Slack Status](https://ember-community-slackin.herokuapp.com/badge.svg)](https://ember-community-slackin.herokuapp.com/)
 
 This project aims to bring Google's new [Material Design](https://www.google.com/design/spec/material-design/introduction.html) to Ember. The goal is to encapsulate everything possible in Ember components. This project is packaged as an [Ember-cli](http://www.ember-cli.com/) addon.
 
@@ -17,7 +15,7 @@ This should also automatically create an scss file under `app/styles/app.scss` w
 Sass is an important part of Ember-paper. Using sass you can override default variables and easily change the default behavior of Ember-paper.
 
 All the components and styles are ready to use in your application templates.
-Navigate through the [docs](http://miguelcobain.github.io/ember-paper/) to understand how to use each component.
+Navigate through the docs to understand how to use each component.
 
 **Note** If upgrading from a previous version of ember-paper and you are seeing compile errors around `app.scss|sass` not existing, please make sure to remove `broccoli-sass` from your `package.json`, remove your `node_modules` and reinstall.
 
@@ -28,7 +26,8 @@ Ember Paper uses fonts from Google Fonts, so the URL to them has to be white lis
 ```js
 ENV.contentSecurityPolicy = {
   'default-src': "'none'",
-  'script-src': "'self'",
+  'script-src': "'self' 'unsafe-inline'",
+  'style-src': "'self' 'unsafe-inline' https://fonts.googleapis.com",
   'font-src': "'self' fonts.gstatic.com",
   'connect-src': "'self'",
   'img-src': "'self' data:",
@@ -58,7 +57,7 @@ If you need a component for your project which has not yet been migrated to vers
 
 ## Resources
 
-- The team can often be found on the [e-paper channel on slack](https://embercommunity.slack.com/messages/e-paper/). Features and designs are discussed there prior to implementation.
+- The team can often be found on the [#e-paper channel on slack](https://embercommunity.slack.com/messages/e-paper/). Features and designs are discussed there prior to implementation. Get your invite to Ember Community Slack [here](https://ember-community-slackin.herokuapp.com/).
 
 - The [GitHub milestone issue](https://github.com/miguelcobain/ember-paper/issues/249) tracks our progress to version 1.0.
 
@@ -68,7 +67,7 @@ If you need a component for your project which has not yet been migrated to vers
 
 - Building the `ember-paper` demo application will give you your own up-to-date reference. This can be accomplished by installing ember-paper as if it were an application and running `ember server`.
 
-- **Ready to help?** Install the version 1.0-focused `master` branch and read the CONTRIBUTING.md guide within.
+- **Ready to help?** Read our [Contributing Guide](CONTRIBUTING.md).
 
 ## Contributing
 
