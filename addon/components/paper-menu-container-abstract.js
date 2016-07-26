@@ -1,12 +1,19 @@
+/**
+ * @module ember-paper
+ */
 import Ember from 'ember';
 import PaperMenuAbstract from './paper-menu-abstract';
 
-/*
- * The paper-menu-container-abstract is responsible for animation and positioning the menu / select /  any other
- * menu based component.
+const { Component } = Ember;
+
+/**
+ * The paper-menu-container-abstract is responsible for animation and
+ * positioning the menu or select or any other menu based component.
  *
+ * @class PaperMenuContainerAbstract
+ * @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   transitionEvents: Ember.inject.service(),
   constants: Ember.inject.service(),
 
@@ -55,8 +62,11 @@ export default Ember.Component.extend({
   hideWrapper() {
     let _self = this;
     return new Ember.RSVP.Promise(function(resolve/*, reject*/) {
-      _self.get('transitionEvents').addEndEventListener(_self.get('element'), resolve);
-      _self.$().removeClass('md-active').addClass('md-leave');
+      _self.get('transitionEvents').addEndEventListener(_self.get('element'), function() {
+        _self.$().removeClass('md-active');
+        resolve();
+      });
+      _self.$().addClass('md-leave');
     });
   },
 
