@@ -1,10 +1,26 @@
+/**
+ * @module ember-paper
+ */
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component } = Ember;
+
+/**
+ * @class PaperDialogContainer
+ * @extends Ember.Component
+ */
+export default Component.extend({
   classNames: ['md-dialog-container'],
 
-  click() {
-    this.sendAction('outsideClicked');
-  }
+  mouseDown(ev) {
+    this._sourceEl = ev.target;
+  },
 
+  mouseUp(ev) {
+    if (this._sourceEl === this.element && ev.target === this.element) {
+      ev.stopPropagation();
+      ev.preventDefault();
+      this.sendAction('outsideClicked');
+    }
+  }
 });

@@ -1,10 +1,12 @@
 import Ember from 'ember';
 
-export default Ember.Service.extend({
+const { Service, inject, computed, Object: EObject } = Ember;
 
-  sniffer: Ember.inject.service('sniffer'),
+export default Service.extend({
 
-  webkit: Ember.computed(function() {
+  sniffer: inject.service('sniffer'),
+
+  webkit: computed(function() {
     return /webkit/i.test(this.get('sniffer.vendorPrefix'));
   }),
 
@@ -13,7 +15,7 @@ export default Ember.Service.extend({
     return this.get('webkit') ? `-webkit-${name.charAt(0)}${name.substring(1)}` : name;
   },
 
-  CSS: Ember.computed('webkit', function() {
+  CSS: computed('webkit', function() {
     let webkit = this.get('webkit');
     return {
       /* Constants */
@@ -32,7 +34,7 @@ export default Ember.Service.extend({
     };
   }),
 
-  KEYCODE: Ember.Object.create({
+  KEYCODE: EObject.create({
     ENTER:          13,
     ESCAPE:         27,
     SPACE:          32,
@@ -44,19 +46,28 @@ export default Ember.Service.extend({
   }),
 
   MEDIA: {
-    'sm': '(max-width: 599px)',
-    'gt-sm': '(min-width: 600px)',
-    'md': '(min-width: 600px) and (max-width: 959px)',
-    'gt-md': '(min-width: 960px)',
-    'lg': '(min-width: 960px) and (max-width: 1199px)',
-    'gt-lg': '(min-width: 1200px)'
+    'xs': '(max-width: 599px)',
+    'gt-xs': '(min-width: 600px)',
+    'sm': '(min-width: 600px) and (max-width: 959px)',
+    'gt-sm': '(min-width: 960px)',
+    'md': '(min-width: 960px) and (max-width: 1279px)',
+    'gt-md': '(min-width: 1280px)',
+    'lg': '(min-width: 1280px) and (max-width: 1919px)',
+    'gt-lg': '(min-width: 1920px)',
+    'xl': '(min-width: 1920px)',
+    'print': 'print'
   },
+
   MEDIA_PRIORITY: [
+    'xl',
     'gt-lg',
     'lg',
     'gt-md',
     'md',
     'gt-sm',
-    'sm'
+    'sm',
+    'gt-xs',
+    'xs',
+    'print'
   ]
 });

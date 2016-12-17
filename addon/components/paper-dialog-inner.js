@@ -1,8 +1,16 @@
+/**
+ * @module ember-paper
+ */
 import Ember from 'ember';
 import Translate3dMixin from '../mixins/translate3d-mixin';
 
 const { Component } = Ember;
 
+/**
+ * @class PaperDialogInner
+ * @extends Ember.Component
+ * @uses Translate3dMixin
+ */
 export default Component.extend(Translate3dMixin, {
   tagName: 'md-dialog',
   classNames: ['md-default-theme'],
@@ -21,13 +29,6 @@ export default Component.extend(Translate3dMixin, {
   onTranslateToEnd($origin) {
     if ($origin) {
       $origin.focus();
-    }
-  },
-
-  click(ev) {
-    if (this.get('clickOutsideToClose')) {
-      ev.stopPropagation();
-      return false;
     }
   }
 

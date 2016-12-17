@@ -1,10 +1,19 @@
+/**
+ * @module ember-paper
+ */
 import Ember from 'ember';
 import PaperGridList from './paper-grid-list';
 
-export default Ember.Component.extend({
+const { Component, computed, inject, get } = Ember;
+
+/**
+ * @class PaperGridTile
+ * @extends Ember.Component
+ */
+export default Component.extend({
   tagName: 'md-grid-tile',
 
-  constants: Ember.inject.service(),
+  constants: inject.service(),
 
   didInsertElement() {
     this._super(...arguments);
@@ -23,7 +32,7 @@ export default Ember.Component.extend({
     this.get('gridList').send('invalidateLayout');
   },
 
-  gridList: Ember.computed(function() {
+  gridList: computed(function() {
     return this.nearestOfType(PaperGridList);
   }),
 
@@ -39,16 +48,16 @@ export default Ember.Component.extend({
     };
 
     attrNames.forEach((attrName) => {
-      if (Ember.get(this, attrName)) {
-        this.set(`old${attrName}`, Ember.get(this, attrName));
+      if (get(this, attrName)) {
+        this.set(`old${attrName}`, get(this, attrName));
 
         this.addObserver(attrName, checkObserverValues);
       }
 
       for (let mediaName in this.get('constants.MEDIA')) {
         let normalizedName = `${attrName}-${mediaName}`;
-        if (Ember.get(this, normalizedName)) {
-          this.set(`old${normalizedName}`, Ember.get(this, normalizedName));
+        if (get(this, normalizedName)) {
+          this.set(`old${normalizedName}`, get(this, normalizedName));
 
           this.addObserver(normalizedName, checkObserverValues);
         }

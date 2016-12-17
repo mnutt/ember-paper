@@ -1,7 +1,9 @@
 /* jshint node: true */
 'use strict';
 
+var fs = require('fs');
 var path = require('path');
+var resolve = require('resolve');
 var autoprefixer = require('broccoli-autoprefixer');
 var mergeTrees = require('broccoli-merge-trees');
 var Funnel = require('broccoli-funnel');
@@ -11,14 +13,22 @@ module.exports = {
   name: 'ember-paper',
 
   included: function(app) {
-    this._super.included(app);
+    this._super.included.apply(this, arguments);
 
     if (!process.env.EMBER_CLI_FASTBOOT) {
       app.import(app.bowerDirectory + '/hammer.js/hammer.js')
       app.import(app.bowerDirectory + '/matchMedia/matchMedia.js');
-    };
+      app.import('vendor/propagating.js');
+    }
+  },
 
-    app.import('vendor/propagating.js');
+  contentFor: function(type, config) {
+    if (type === 'body-footer') {
+      var emberPowerSelect = this.addons.filter(function(addon) {
+        return addon.name === 'ember-power-select';
+      })[0];
+      return emberPowerSelect.contentFor(type, config);
+    }
   },
 
   treeForStyles: function(tree) {
@@ -28,7 +38,6 @@ module.exports = {
       'core/style/mixins.scss',
       'core/style/variables.scss',
       'core/style/structure.scss',
-      'core/services/layout/layout.attributes.scss',
       'core/services/layout/layout.scss',
       //component styles
       'components/content/content.scss',
@@ -96,22 +105,15 @@ module.exports = {
       'components/backdrop/backdrop-theme.scss',
 
       'components/dialog/dialog.scss',
-      'components/dialog/dialog-theme.scss'
+      'components/dialog/dialog-theme.scss',
+
+      'components/virtualRepeat/virtual-repeater.scss',
+
+      'components/chips/chips.scss',
+      'components/chips/chips-theme.scss'
     ];
 
-    /*
-      Find the angular-material-source module in a manner that works for npm 2.x
-      and 3.x in both the addon itself and projects that depend on this addon
-
-      This is an edge case b/c angular-material-source does not have a main
-      module we can require.resolve through node itself and similarily ember-cli
-      does not have such a hack for the same reason.
-
-      tl;dr - We want the non built scss files, and b/c this dep is only provided via
-      bower, we use this hack. Please change it if you read this and know a better way.
-    */
-    var pathBase = path.resolve(this.nodeModulesPath, 'angular-material-source', 'src')
-    var angularScssFiles = new Funnel(pathBase, {
+    var angularScssFiles = new Funnel(this.pathBase(), {
       files: scssFiles,
       destDir: 'angular-material',
       annotation: 'AngularScssFunnel'
@@ -124,9 +126,26 @@ module.exports = {
     return this._super.treeForStyles(mergeTrees([angularScssFiles, tree], { overwrite: true }));
   },
 
+  /*
+    Rely on the `resolve` package to mimic node's resolve algorithm.
+    It finds the angular-material-source module in a manner that works for npm 2.x,
+    3.x, and yarn in both the addon itself and projects that depend on this addon.
+
+    This is an edge case b/c angular-material-source does not have a main
+    module we can require.resolve through node itself and similarily ember-cli
+    does not have such a hack for the same reason.
+
+    tl;dr - We want the non built scss files, and b/c this dep is only provided via
+    bower, we use this hack. Please change it if you read this and know a better way.
+  */
+  pathBase: function() {
+    return path.dirname(resolve.sync('angular-material-source/package.json', { basedir: __dirname })) + '/src';
+  },
+
   postprocessTree: function(type, tree) {
     if (type === 'all' || type === 'styles') {
-      tree = autoprefixer(tree, { browsers: ['last 2 versions'] });
+      tree = autoprefixer(tree,
+          this.app.options.autoprefixer || { browsers: ['last 2 versions'] });
     }
     return tree;
   },

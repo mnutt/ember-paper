@@ -1,23 +1,96 @@
 # Ember Paper Changelog
 
-### 1.0.0
-
 #### Migrating from releases prior to 1.0
 
-Version 1.0 introduces many API changes relative to previous releases. In addition to the specific changelog listing below, the follow general changes have been made. Note that during the development of 1.0, the `wip/v1.0.0` branch reflects the most up-to-date version, with a mixture of updated and to-be-updated components.
+Version 1.0 introduces many API changes relative to previous releases. In addition to the specific changelog listing below, the follow general changes have been made. Note that during the development of 1.0, the `master` branch reflects the most up-to-date version, with a mixture of updated and to-be-updated components.
 
-Contributions and pull requests are always welcome. Contributors may often be found on the slack.com #e-paper channel. Building the dummy application by installing `ember-paper` as if it were an application will provide you an up-to-date interactive demo, templates, and code samples.
+Contributions and pull requests are always welcome. Contributors may often be found on the [#e-paper channel on slack](https://embercommunity.slack.com/messages/e-paper/). Building the dummy application by installing `ember-paper` as if it were an application will provide you an up-to-date interactive demo, templates, and code samples.
 
-- Attributes are now `camelCased` rather than `kebob-cased`.
+- Attributes are now `camelCased` rather than `kebab-cased`.
 - Components which accept user input, such as `paper-input`, `paper-checkbox`, `paper-switch` and `paper-select` now receive their input via the one-way `value` attribute and notify of a changed value by the `onChange` actions.
 - When provided by the API, `onChange` actions are required and throw an assertion if not provided.
 - Actions maybe be specified by a string action name (`onChange="updateValue"`) or an action closure (`onChange=(action (mut "myValue"))`). If you need to specify a target or additional parameter, you must use an action closure.
 - Many attributes have been renamed for clarity and consistency. See the specific changes below.
 - `paper-icon`'s `size` attribute now takes a size in pixels, and `lg` or `sm` values are no longer supported.
+- renamed the `paper-radio-group` `paper-radio` to just `radio` -- usage would now be `group.radio` as opposed to `group.paper-radio`.
+- Flex and layout attributes are replaced by classes (see [the documentation](http://miguelcobain.github.io/ember-paper/release-1/#/layout/introduction)). `flex=true` on Ember Paper components has also been removed and replaced by classes.
 
-#### 1.0.0-alpha.2
+### master
+- [4134ccd](https://github.com/miguelcobain/ember-paper/commit/4134ccdcdf5e18c79d26a26079c2df79a3ef3a7f) remove `onValidityChange` call on component destroy
+- [a463108](https://github.com/miguelcobain/ember-paper/commit/a463108b8324fa101d0557783262549a1c1b6273) remove leftover auto-generated `app.scss` that was causing some errors
 
-#### 1.0.0-alpha.1
+### 1.0.0-alpha.11 (December 2, 2016)
+- [e923c51](https://github.com/miguelcobain/ember-paper/commit/e923c517ae10cfb23a86e28207c8496f9a74f377) fix sidenav opening glitch
+- [741e03e](https://github.com/miguelcobain/ember-paper/commit/741e03ed5cbd5b75306ac9bbad948482b888027f) fix bug on sidenav unregistration
+- [6c980fb](https://github.com/miguelcobain/ember-paper/commit/6c980fbd28c79383a13dfca3cf190012fefa91e9) `paper-item` now yields `checkbox`, `switch` and `button` controls. These controls get proxied by `paper-item` clicks.
+- [#577](https://github.com/miguelcobain/ember-paper/pull/577) `paper-list` update. Specify `seconday=true` when you want controls to be placed on the right side of `paper-item`.
+- [350a2c7](https://github.com/miguelcobain/ember-paper/commit/350a2c7418c5422d5daef4d1cad9acfc22cf8c37) Use timeouts to delete dialog clones after transition. Fixes bug where dialog clones were not removed.
+
+### 1.0.0-alpha.10 (November 24, 2016)
+- [82c53e4](https://github.com/miguelcobain/ember-paper/commit/82c53e4f91bf271d44bf719835cc2530a1913c91) Bugfix for for npm module resolution
+
+### 1.0.0-alpha.9 (November 24, 2016)
+- [#562](https://github.com/miguelcobain/ember-paper/pull/562) Close autocomplete autocomplete's dropdown on tabKey
+- [#563](https://github.com/miguelcobain/ember-paper/pull/563) Make autocomplete more similar to paper-input (required star and passThru hash)
+- [a4acae4](https://github.com/miguelcobain/ember-paper/commit/a4acae4bb014a476506603e2e82e5d6467f30efe) Remove usage of `Ember.K`
+- [#560](https://github.com/miguelcobain/ember-paper/pull/560) `paper-autocomplete` works with `allowClear` + floating label
+- [#567](https://github.com/miguelcobain/ember-paper/pull/567) `paper-autocomplete-highlight` now highlights non-string labels
+- [#527](https://github.com/miguelcobain/ember-paper/pull/527) Add paper-chips & paper-contact-chips
+- [#571](https://github.com/miguelcobain/ember-paper/pull/571) Allow css class on paper dialog and its container
+
+### 1.0.0-alpha.8 (November 10, 2016)
+- [#542](https://github.com/miguelcobain/ember-paper/pull/542) paper-form now yields a submit button
+- [#549](https://github.com/miguelcobain/ember-paper/pull/549) Allow `title` attribute in paper-button
+- [#551](https://github.com/miguelcobain/ember-paper/pull/551) avoids calling setValue when `paper-input` is destroyed
+- [#552](https://github.com/miguelcobain/ember-paper/pull/552) `paper-autocomplete` searchText is now reseted properly
+
+### 1.0.0-alpha.7 (November 2, 2016)
+- [#531](https://github.com/miguelcobain/ember-paper/pull/531) paper-select focus fix - doesn't call focusTarget.focus if there is no focusTarget (which is perfectly possible)
+- [#507](https://github.com/miguelcobain/ember-paper/issues/507) replace all instances of attribute based flex layout and replace with class based ones
+- [#469](https://github.com/miguelcobain/ember-paper/pull/469) Set the value before growing the textarea on render
+- [#541](https://github.com/miguelcobain/ember-paper/pull/541) allow touch devices to interact with autocomplete
+
+### 1.0.0-alpha.6 (October 27, 2016)
+- [#395](https://github.com/miguelcobain/ember-paper/pull/395) The Great Update of paper-menu et al:
+  - `paper-menu` was updated. It uses  [ember-basic-dropdown](https://github.com/cibernox/ember-basic-dropdown) under the hood and the API is the same
+  - `paper-select` and `paper-autocomplete` were updated. They use  [ember-power-select](https://github.com/cibernox/ember-power-select) under the hood and the API is the same
+  - See the referenced projects and ember-paper's documentation examples to understand the new API
+  - Special thanks to the champions of this update @xomaczar and @ibarrick
+
+### 1.0.0-alpha.5 (October 13, 2016)
+- [#521](https://github.com/miguelcobain/ember-paper/pull/521) Update Angular SCSS import to work with yarn and npm3 flat node_modules
+- [#520](https://github.com/miguelcobain/ember-paper/pull/520) fixes issues with people seeing `regeneratorRuntime is not defined`
+- [#515](https://github.com/miguelcobain/ember-paper/pull/515) paper-icon: set md-font-icon attribute to apply correct width
+
+### 1.0.0-alpha.4
+- [#466](https://github.com/miguelcobain/ember-paper/pull/466) added autoprefixer configuration option
+- [#472](https://github.com/miguelcobain/ember-paper/pull/472) update ember-css-transitions
+- [#511](https://github.com/miguelcobain/ember-paper/issues/511) allow inner dialog clicks to bubble
+- [5f35cf5](https://github.com/miguelcobain/ember-paper/commit/5f35cf517530b06c850282a757d49096bff9a22b) Glimmer 2 compatible
+- [#506](https://github.com/miguelcobain/ember-paper/pull/506) Add super calls inside paper-input lifecycle hooks (fixes paper-form)
+
+### 1.0.0-alpha.3
+- [#441](https://github.com/miguelcobain/ember-paper/pull/441) fixed fastboot service check
+- [#449](https://github.com/miguelcobain/ember-paper/pull/449) Update `ember-css-transitions` to `0.1.4`
+- [#446](https://github.com/miguelcobain/ember-paper/pull/446) update `ember-wormhole` to `^0.4.0`
+
+### 1.0.0-alpha.2
+
+- This version uses an updated version of `ember-css-transitions` from github rather than npm.
+- [#384](https://github.com/miguelcobain/ember-paper/pull/384) update sidenav
+  - `paper-nav-container` was renamed to `paper-sidenav-container`
+  - `locked-open` was renamed to `lockedOpen`
+  - sidenav opening now follows DDAU with the `open` attribute and `onToggle` action
+  - animations work
+  - there is a `paperSidenav` service that allows sidenav toggling across the application
+  - `paper-sidenav-toggle` no longer sets a class to hide at certain breakpoints
+  - `paper-sidenav-toggle` is now tagless. It is essentially a functional component that yields an action to its block
+  - `paper-sidenav` now can use a `position` param that positions the sidenav `left` (default) or `right`
+  - `paper-backdrop` action `onTap` changed to `onClick`
+- [#408](https://github.com/miguelcobain/ember-paper/pull/408) added paper-form component. `paper-input`'s `onInvalid` action renamed to `onValidityChange`
+- [#430](https://github.com/miguelcobain/ember-paper/pull/430) added fastboot support. Removed errors associated with `document` when running `ember fastboot`
+
+### 1.0.0-alpha.1
 
 - [#365](https://github.com/miguelcobain/ember-paper/pull/365) paper-button: Support for `fab` and `mini`.
 - [#362](https://github.com/miguelcobain/ember-paper/pull/362) paper-toolbar: Support for `tall`.
@@ -26,7 +99,7 @@ Contributions and pull requests are always welcome. Contributors may often be fo
 - [#370](https://github.com/miguelcobain/ember-paper/pull/370) `paper-icon` now once again supports kebab cased icon names, and a `size` in pixels.
 - [#372](https://github.com/miguelcobain/ember-paper/pull/372) `paper-button` can generate `a` link elements, with an href and optional target attribute.
 
-#### 1.0.0-alpha.0
+### 1.0.0-alpha.0
 - [1a9b641](https://github.com/miguelcobain/ember-paper/commit/1a9b6411a8ca30f3e9440d8585dc0f1ff4ff7649) paper-progress-circular now uses `diameter` instead of `md-diameter`
 - [cf2a8da](https://github.com/miguelcobain/ember-paper/commit/cf2a8da350ea805e11eef36914ae76213b4c9f24) paper-progress-linear now uses `bufferValue` instead of `buffer-value`
 - [#285](https://github.com/miguelcobain/ember-paper/pull/285) paper-checkbox now uses *actions up, data down*. `onChange` action is mandatory.

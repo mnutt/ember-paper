@@ -1,7 +1,8 @@
 import Ember from 'ember';
-const { $ } = Ember;
 
-export default Ember.Controller.extend({
+const { Controller, $ } = Ember;
+
+export default Controller.extend({
   actions: {
 
     /* Dialog with parent */
@@ -43,6 +44,15 @@ export default Ember.Controller.extend({
 
     toggleSourceCode() {
       this.toggleProperty('showSourceCode');
+    },
+
+    /* Animated dialog */
+    openAnimatedDialog() {
+      this.set('showAnimatedDialog', true);
+    },
+
+    closeAnimatedDialog() {
+      this.set('showAnimatedDialog', false);
     }
 
   }

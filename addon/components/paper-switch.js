@@ -1,22 +1,26 @@
+/**
+ * @module ember-paper
+ */
 import Ember from 'ember';
-import BaseFocusable from './base-focusable';
+import FocusableMixin from 'ember-paper/mixins/focusable-mixin';
 import RippleMixin from 'ember-paper/mixins/ripple-mixin';
-import ProxiableMixin from 'ember-paper/mixins/proxiable-mixin';
 import ColorMixin from 'ember-paper/mixins/color-mixin';
+import ProxiableMixin from 'ember-paper/mixins/proxiable-mixin';
 
 const {
-  assert,
-  computed,
-  get,
-  run,
-  String: {
-    htmlSafe
-  },
-  inject
+  Component, assert, computed, get, run, String: { htmlSafe }, inject
 } = Ember;
 /* global Hammer */
 
-export default BaseFocusable.extend(RippleMixin, ProxiableMixin, ColorMixin, {
+/**
+ * @class PaperSwitch
+ * @extends Ember.Component
+ * @uses FocusableMixin
+ * @uses RippleMixin
+ * @uses ColorMixin
+ * @uses ProxiableMixin
+ */
+export default Component.extend(FocusableMixin, RippleMixin, ColorMixin, ProxiableMixin, {
   tagName: 'md-switch',
   classNames: ['paper-switch', 'md-default-theme'],
   classNameBindings: ['value:md-checked', 'dragging:md-dragging'],
@@ -52,7 +56,7 @@ export default BaseFocusable.extend(RippleMixin, ProxiableMixin, ColorMixin, {
     }
   },
 
-  didInitAttrs() {
+  init() {
     this._super(...arguments);
     assert('{{paper-switch}} requires an `onChange` action or null for no action.', this.get('onChange') !== undefined);
   },

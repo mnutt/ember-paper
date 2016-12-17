@@ -10,7 +10,6 @@ $accent: 'pink';
  */
 
 body {
-  overflow: hidden;
   max-width: 100%;
   max-height: 100%;
 }
@@ -41,4 +40,8 @@ md-toolbar.md-warn {
       color: $dark-contrast-color;
     }
   }
+}
+
+.inner-sidenav {
+  position: relative;
 }

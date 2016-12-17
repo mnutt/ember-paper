@@ -1,9 +1,17 @@
+/**
+ * @module ember-paper
+ */
 import Ember from 'ember';
+
 const { inject, computed, Mixin, run, $ } = Ember;
 /* global window */
 
 const DURATION = 400;
 
+/**
+ * @class RippleMixin
+ * @extends Ember.Mixin
+ */
 export default Mixin.create({
   util: inject.service(),
   rippleContainerSelector: '.md-container',
@@ -271,6 +279,7 @@ export default Mixin.create({
     }
     this.ripples.splice(this.ripples.indexOf(ripple), 1);
     ripple.removeClass('md-ripple-active');
+    ripple.addClass('md-ripple-remove');
     if (this.ripples.length === 0) {
       this._container.css({ backgroundColor: '' });
     }

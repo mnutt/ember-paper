@@ -1,29 +1,41 @@
+/**
+ * @module ember-paper
+ */
 import Ember from 'ember';
-import BaseFocusable from './base-focusable';
-import RippleMixin from '../mixins/ripple-mixin';
-import ProxiableMixin from 'ember-paper/mixins/proxiable-mixin';
+import FocusableMixin from 'ember-paper/mixins/focusable-mixin';
+import RippleMixin from 'ember-paper/mixins/ripple-mixin';
 import ColorMixin from 'ember-paper/mixins/color-mixin';
-const { inject, assert } = Ember;
+import ProxiableMixin from 'ember-paper/mixins/proxiable-mixin';
 
-export default BaseFocusable.extend(RippleMixin, ProxiableMixin, ColorMixin, {
+const { Component, inject, assert } = Ember;
+
+/**
+ * @class PaperCheckbox
+ * @extends Ember.Component
+ * @uses FocusableMixin
+ * @uses RippleMixin
+ * @uses ColorMixin
+ * @uses ProxiableMixin
+ */
+export default Component.extend(FocusableMixin, RippleMixin, ColorMixin, ProxiableMixin, {
   tagName: 'md-checkbox',
   classNames: ['md-checkbox', 'md-default-theme'],
   classNameBindings: ['value:md-checked'],
 
-  /* Ripple Overrides */
+  /* RippleMixin Overrides */
   rippleContainerSelector: '.md-container',
   center: true,
   dimBackground: false,
   fitRipple: true,
 
-  /* BaseFocusable Overrides */
+  /* FocusableMixin Overrides */
   focusOnlyOnKey: true,
 
   constants: inject.service(),
 
   value: false,
 
-  didInitAttrs() {
+  init() {
     this._super(...arguments);
     assert('{{paper-checkbox}} requires an `onChange` action or null for no action.', this.get('onChange') !== undefined);
   },

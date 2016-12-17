@@ -1,10 +1,23 @@
+/**
+ * @module ember-paper
+ */
 import Ember from 'ember';
-import BaseFocusable from './base-focusable';
-import RippleMixin from '../mixins/ripple-mixin';
+import FocusableMixin from 'ember-paper/mixins/focusable-mixin';
+import RippleMixin from 'ember-paper/mixins/ripple-mixin';
 import ColorMixin from 'ember-paper/mixins/color-mixin';
-const { computed, assert } = Ember;
+import ChildMixin from 'ember-paper/mixins/child-mixin';
 
-export default BaseFocusable.extend(RippleMixin, ColorMixin, {
+const { Component, computed, assert } = Ember;
+
+/**
+ * @class PaperRadio
+ * @extends Ember.Component
+ * @uses FocusableMixin
+ * @uses ColorMixin
+ * @uses RippleMixin
+ * @uses ChildMixin
+ */
+export default Component.extend(FocusableMixin, RippleMixin, ColorMixin, ChildMixin, {
   tagName: 'md-radio-button',
   classNames: ['md-default-theme'],
   classNameBindings: ['checked:md-checked'],
@@ -19,24 +32,13 @@ export default BaseFocusable.extend(RippleMixin, ColorMixin, {
   dimBackground: false,
   fitRipple: true,
 
-  /* BaseFocusable Overrides */
+  /* FocusableMixin Overrides */
   focusOnlyOnKey: true,
 
   // Lifecycle hooks
-  didInitAttrs() {
-    this._super(...arguments);
+  init() {
     assert('{{paper-radio}} requires an `onChange` action or null for no action.', this.get('onChange') !== undefined);
-
-    if (this.get('parentGroup')) {
-      this.get('parentGroup').register(this);
-    }
-  },
-
-  willDestroyElement() {
     this._super(...arguments);
-    if (this.get('parentGroup')) {
-      this.get('parentGroup').unregister(this);
-    }
   },
 
   checked: computed('groupValue', 'value', function() {

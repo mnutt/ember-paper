@@ -1,16 +1,25 @@
+/**
+ * @module ember-paper
+ */
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, computed, String: { htmlSafe } } = Ember;
+
+/**
+ * @class PaperAutocompleteHighlight
+ * @extends Ember.Component
+ */
+export default Component.extend({
   tagName: 'span',
   flags: '',
 
-  highlight: Ember.computed('searchText', 'label', 'flags', function() {
-    let unsafeText = Ember.Handlebars.Utils.escapeExpression(this.get('label'));
-    let text = unsafeText;
+  highlight: computed('searchText', 'label', 'flags', function() {
+    let text = `${this.get('label')}`;
     let flags = this.get('flags');
     let regex = this.getRegExp(this.get('searchText'), flags);
-    let html  = text.replace(regex, '<span class="highlight">$&</span>');
-    return new Ember.Handlebars.SafeString(html);
+
+    let html = text.replace(regex, '<span class="highlight">$&</span>');
+    return htmlSafe(html);
   }),
 
   sanitize(term) {

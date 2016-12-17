@@ -1,14 +1,25 @@
+/**
+ * @module ember-paper
+ */
 import Ember from 'ember';
-import BaseFocusable from './base-focusable';
-import RippleMixin from '../mixins/ripple-mixin';
-import ProxiableMixin from 'ember-paper/mixins/proxiable-mixin';
+import FocusableMixin from 'ember-paper/mixins/focusable-mixin';
+import RippleMixin from 'ember-paper/mixins/ripple-mixin';
 import ColorMixin from 'ember-paper/mixins/color-mixin';
+import ProxiableMixin from 'ember-paper/mixins/proxiable-mixin';
 
-const { computed } = Ember;
+const { Component, computed } = Ember;
 
-export default BaseFocusable.extend(RippleMixin, ProxiableMixin, ColorMixin, {
+/**
+ * @class PaperButton
+ * @extends Ember.Component
+ * @uses FocusableMixin
+ * @uses RippleMixin
+ * @uses ColorMixin
+ * @uses ProxiableMixin
+ */
+export default Component.extend(FocusableMixin, RippleMixin, ColorMixin, ProxiableMixin, {
   tagName: 'button',
-  classNames: ['paper-button', 'md-default-theme', 'md-button'],
+  classNames: ['md-default-theme', 'md-button'],
   raised: false,
   iconButton: false,
   fab: computed.reads('mini'),  // circular button
@@ -19,7 +30,8 @@ export default BaseFocusable.extend(RippleMixin, ProxiableMixin, ColorMixin, {
   attributeBindings: [
     'type',
     'href',
-    'target'
+    'target',
+    'title'
   ],
   classNameBindings: [
     'raised:md-raised',
