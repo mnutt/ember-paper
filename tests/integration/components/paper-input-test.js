@@ -117,6 +117,28 @@ test('renders input with attribute autocomplete', function(assert) {
   assert.equal(actual, expected);
 });
 
+test('renders input with attribute autocorrect', function(assert) {
+  assert.expect(1);
+
+  this.render(hbs`{{paper-input passThru=(hash autocorrect="autocorrect") onChange=dummyOnChange}}`);
+
+  let actual = this.$('md-input-container input').attr('autocorrect');
+  let expected = 'autocorrect';
+
+  assert.equal(actual, expected);
+});
+
+test('renders input with attribute autocapitalize', function(assert) {
+  assert.expect(1);
+
+  this.render(hbs`{{paper-input passThru=(hash autocapitalize="autocapitalize") onChange=dummyOnChange}}`);
+
+  let actual = this.$('md-input-container input').attr('autocapitalize');
+  let expected = 'autocapitalize';
+
+  assert.equal(actual, expected);
+});
+
 test('renders input with attribute form', function(assert) {
   assert.expect(1);
 
@@ -499,4 +521,15 @@ test('hasValue works when `value` updated programatically', function(assert) {
     this.$('md-input-container').hasClass('md-input-has-value'),
     'should have md-input-has-value class if input has value'
   );
+});
+
+test('can render other stuff using paper-input block', function(assert) {
+  this.foo = '';
+  this.render(hbs`
+    {{#paper-input value=foo onChange=(action (mut foo))}}
+      <div class="other-stuff"></div>
+    {{/paper-input}}
+  `);
+
+  assert.equal(this.$('.other-stuff').length, 1);
 });
