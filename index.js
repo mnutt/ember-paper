@@ -43,6 +43,7 @@ module.exports = {
 
   contentFor: function(type, config) {
     if (type === 'body-footer') {
+      var response = null;
       var emberPowerSelect = this.addons.filter(function(addon) {
         return addon.name === 'ember-power-select';
       })[0];
