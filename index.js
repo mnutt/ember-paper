@@ -37,12 +37,21 @@ module.exports = {
     }
   },
 
+  config(env, baseConfig) {
+    return { 'ember-paper': { insertFontLinks: true } };
+  },
+
   contentFor: function(type, config) {
     if (type === 'body-footer') {
       var emberPowerSelect = this.addons.filter(function(addon) {
         return addon.name === 'ember-power-select';
       })[0];
-      return emberPowerSelect.contentFor(type, config);
+      response = emberPowerSelect.contentFor(type, config);
+      if (config.environment !== 'test' &&  !config._emberPaperContentForInvoked) {
+        config._emberPaperContentForInvoked = true;
+        response = response ? `${response}<div id="paper-wormhole"></div>`: '<div id="paper-wormhole"></div>';
+      }
+      return response;
     }
   },
 
@@ -51,21 +60,15 @@ module.exports = {
 
     if (!process.env.EMBER_CLI_FASTBOOT) {
       var hammerJs = new Funnel(this.pathBase('hammerjs'), {
-        files: [
-          'hammer.js'
-        ],
+        files: [ 'hammer.js' ],
         destDir: 'hammerjs'
       });
       var matchMediaPolyfill = new Funnel(this.pathBase('matchmedia-polyfill'), {
-        files: [
-          'matchMedia.js'
-        ],
+        files: [ 'matchMedia.js' ],
         destDir: 'matchmedia-polyfill'
       });
       var propagatingHammerJs = new Funnel(this.pathBase('propagating-hammerjs'), {
-        files: [
-          'propagating.js'
-        ],
+        files: [ 'propagating.js' ],
         destDir: 'propagating-hammerjs'
       });
       trees = trees.concat([hammerJs, matchMediaPolyfill, propagatingHammerJs]);
@@ -85,7 +88,9 @@ module.exports = {
       'core/style/mixins.scss',
       'core/style/variables.scss',
       'core/style/structure.scss',
+      'core/style/layout.scss',
       'core/services/layout/layout.scss',
+
       //component styles
       'components/content/content.scss',
       'components/content/content-theme.scss',
@@ -196,10 +201,5 @@ module.exports = {
           this.app.options.autoprefixer || { browsers: ['last 2 versions'] });
     }
     return tree;
-  },
-
-  // TODO: Remove once ember-paper is stable.
-  isDevelopingAddon: function() {
-    return true;
   }
 };
